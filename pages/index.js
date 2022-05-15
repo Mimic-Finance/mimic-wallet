@@ -5,6 +5,7 @@ const web3 = new Web3(Web3.givenProvider || "http://localhost:8547");
 
 const Home = () => {
   const [account, setAccount] = useState();
+  const [txHash, setTxHash] = useState();
 
   const handleCreateAccount = () => {
     const _account = web3.eth.accounts.create();
@@ -34,6 +35,7 @@ const Home = () => {
       function (error, hash) {
         if (!error) {
           console.log("🎉 The hash of your transaction is: ", hash);
+          setTxHash(hash);
         } else {
           console.log(
             "❗Something went wrong while submitting your transaction:",
@@ -58,6 +60,8 @@ const Home = () => {
           Private key: {account.privateKey}
           <br />
           <button onClick={handleSignTx}>Sign Transaction</button>
+          <br />
+          {txHash && <> TxHash: {txHash}</>}
         </>
       )}
     </>
